@@ -77,15 +77,15 @@ export default function Calendar({ reservas = [], onSelectDate, selectedDate }) 
           } else if (estado === 'PENDIENTE') {
             cls += 'bg-amber-50 text-amber-500 cursor-default';
           } else if (isSelected) {
-            cls += 'bg-brand text-white shadow-md shadow-brand/25 cursor-pointer scale-110';
+            cls += 'bg-primary text-white shadow-md shadow-primary/25 cursor-pointer scale-110';
           } else {
-            cls += 'text-text hover:bg-brand-light hover:text-brand cursor-pointer';
+            cls += 'text-text hover:bg-accent-light hover:text-accent cursor-pointer';
           }
 
           return (
             <div key={dateStr} className={cls} onClick={() => handleClick(day)}>
               {day}
-              {isToday && !isSelected && <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-brand" />}
+              {isToday && !isSelected && <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-accent" />}
             </div>
           );
         })}
@@ -93,7 +93,7 @@ export default function Calendar({ reservas = [], onSelectDate, selectedDate }) 
 
       <div className="flex items-center justify-center gap-5 mt-5 pt-4 border-t border-border">
         <span className="flex items-center gap-1.5 text-xs text-muted">
-          <span className="w-2.5 h-2.5 rounded-full bg-brand-light border border-brand/30" /> Disponible
+          <span className="w-2.5 h-2.5 rounded-full bg-accent-light border border-accent/30" /> Disponible
         </span>
         <span className="flex items-center gap-1.5 text-xs text-muted">
           <span className="w-2.5 h-2.5 rounded-full bg-amber-100 border border-amber-300" /> Pendiente

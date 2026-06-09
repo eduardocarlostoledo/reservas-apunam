@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { crearReserva } from '../services/api';
 
-const INPUT = 'w-full border border-border rounded-xl px-4 py-3 text-sm text-text bg-surface placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition-colors';
+const INPUT = 'w-full border border-border rounded-xl px-4 py-3 text-sm text-text bg-surface placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors';
 
 export default function ReservaForm({ salonId, fecha, salonNombre, onSuccess, onCancel }) {
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -48,19 +48,19 @@ export default function ReservaForm({ salonId, fecha, salonNombre, onSuccess, on
         <div>
           <label className="block text-xs font-semibold text-muted uppercase tracking-wide mb-1.5">Nombre completo</label>
           <input {...register('nombre_completo', { required: 'Requerido' })} className={INPUT} />
-          {errors.nombre_completo && <span className="text-brand text-xs mt-1 block">{errors.nombre_completo.message}</span>}
+          {errors.nombre_completo && <span className="text-red-500 text-xs mt-1 block">{errors.nombre_completo.message}</span>}
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-semibold text-muted uppercase tracking-wide mb-1.5">DNI</label>
             <input {...register('dni', { required: 'Requerido' })} className={INPUT} />
-            {errors.dni && <span className="text-brand text-xs mt-1 block">{errors.dni.message}</span>}
+            {errors.dni && <span className="text-red-500 text-xs mt-1 block">{errors.dni.message}</span>}
           </div>
           <div>
             <label className="block text-xs font-semibold text-muted uppercase tracking-wide mb-1.5">N° Afiliado</label>
             <input {...register('numero_afiliado', { required: 'Requerido' })} className={INPUT} />
-            {errors.numero_afiliado && <span className="text-brand text-xs mt-1 block">{errors.numero_afiliado.message}</span>}
+            {errors.numero_afiliado && <span className="text-red-500 text-xs mt-1 block">{errors.numero_afiliado.message}</span>}
           </div>
         </div>
 
@@ -68,12 +68,12 @@ export default function ReservaForm({ salonId, fecha, salonNombre, onSuccess, on
           <div>
             <label className="block text-xs font-semibold text-muted uppercase tracking-wide mb-1.5">Teléfono</label>
             <input {...register('telefono', { required: 'Requerido' })} className={INPUT} />
-            {errors.telefono && <span className="text-brand text-xs mt-1 block">{errors.telefono.message}</span>}
+            {errors.telefono && <span className="text-red-500 text-xs mt-1 block">{errors.telefono.message}</span>}
           </div>
           <div>
             <label className="block text-xs font-semibold text-muted uppercase tracking-wide mb-1.5">Email</label>
             <input type="email" {...register('email', { required: 'Requerido', pattern: { value: /^\S+@\S+$/, message: 'Email inválido' } })} className={INPUT} />
-            {errors.email && <span className="text-brand text-xs mt-1 block">{errors.email.message}</span>}
+            {errors.email && <span className="text-red-500 text-xs mt-1 block">{errors.email.message}</span>}
           </div>
         </div>
 
@@ -86,7 +86,7 @@ export default function ReservaForm({ salonId, fecha, salonNombre, onSuccess, on
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 bg-brand text-white py-3 rounded-xl font-semibold text-sm hover:bg-brand-dark active:scale-[0.98] disabled:opacity-50 transition-all duration-150"
+            className="flex-1 bg-accent text-white py-3 rounded-xl font-semibold text-sm hover:bg-accent-dark active:scale-[0.98] disabled:opacity-50 transition-all duration-150"
           >
             {loading ? 'Enviando...' : 'Solicitar Reserva'}
           </button>

@@ -35,7 +35,7 @@ export default function SalonPage() {
   if (loading && !salon) {
     return (
       <div className="flex items-center justify-center py-24">
-        <div className="w-8 h-8 border-3 border-brand border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -44,8 +44,8 @@ export default function SalonPage() {
     return (
       <div className="flex items-center justify-center py-16">
         <div className="bg-surface rounded-2xl border border-border p-10 max-w-md text-center">
-          <div className="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
-            <svg className="w-7 h-7 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="w-14 h-14 rounded-full bg-accent-light flex items-center justify-center mx-auto mb-4">
+            <svg className="w-7 h-7 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
@@ -56,7 +56,7 @@ export default function SalonPage() {
           <div className="flex gap-3 justify-center">
             <button
               onClick={() => setSuccess(false)}
-              className="bg-brand text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-brand-dark transition-colors"
+              className="bg-primary text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary-dark transition-colors"
             >
               Volver al calendario
             </button>
@@ -79,7 +79,7 @@ export default function SalonPage() {
       {salon && (
         <div className="mb-8">
           <h1 className="text-2xl md:text-3xl font-bold text-text">{salon.nombre}</h1>
-          <p className="text-muted mt-1">{salon.ubicacion}</p>
+          <p className="text-muted mt-1">{salon.ubicacion}, Misiones</p>
           <p className="text-xs text-gray-400 mt-2 flex items-center gap-1.5">
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             06:00 a 00:00 hs — Reserva por día completo

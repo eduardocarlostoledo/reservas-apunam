@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { adminLogin, getAdminReservas, aprobarReserva, rechazarReserva, getSalones } from '../services/api';
 
-const INPUT = 'w-full border border-border rounded-xl px-4 py-3 text-sm text-text bg-surface placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition-colors';
+const INPUT = 'w-full border border-border rounded-xl px-4 py-3 text-sm text-text bg-surface placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors';
 
 function LoginForm({ onLogin }) {
   const [usuario, setUsuario] = useState('');
@@ -28,8 +28,8 @@ function LoginForm({ onLogin }) {
     <div className="flex items-center justify-center py-16">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-brand-light flex items-center justify-center mx-auto mb-4">
-            <svg className="w-7 h-7 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="w-14 h-14 rounded-2xl bg-primary-light flex items-center justify-center mx-auto mb-4">
+            <svg className="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
           </div>
@@ -49,7 +49,7 @@ function LoginForm({ onLogin }) {
             <input type="password" value={password} onChange={e => setPassword(e.target.value)} required className={INPUT} />
           </div>
           <button type="submit" disabled={loading}
-            className="w-full bg-brand text-white py-3 rounded-xl font-semibold text-sm hover:bg-brand-dark active:scale-[0.98] disabled:opacity-50 transition-all duration-150">
+            className="w-full bg-primary text-white py-3 rounded-xl font-semibold text-sm hover:bg-primary-dark active:scale-[0.98] disabled:opacity-50 transition-all duration-150">
             {loading ? 'Ingresando...' : 'Ingresar'}
           </button>
         </form>
@@ -118,7 +118,7 @@ export default function Admin() {
 
   if (!authed) return <LoginForm onLogin={() => setAuthed(true)} />;
 
-  const SELECT = 'border border-border rounded-xl px-4 py-2.5 text-sm bg-surface text-text focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition-colors appearance-none cursor-pointer';
+  const SELECT = 'border border-border rounded-xl px-4 py-2.5 text-sm bg-surface text-text focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors appearance-none cursor-pointer';
 
   return (
     <div>
@@ -149,7 +149,7 @@ export default function Admin() {
 
       {loading ? (
         <div className="flex items-center justify-center py-16">
-          <div className="w-8 h-8 border-3 border-brand border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
       ) : reservas.length === 0 ? (
         <div className="bg-surface rounded-2xl border border-border border-dashed p-12 text-center">
@@ -179,7 +179,7 @@ export default function Admin() {
                   <button
                     onClick={() => handleAprobar(r.id)}
                     disabled={actionLoading === r.id}
-                    className="px-4 py-2 rounded-xl bg-green-600 text-white text-xs font-semibold hover:bg-green-700 active:scale-[0.97] disabled:opacity-50 transition-all"
+                    className="px-4 py-2 rounded-xl bg-accent text-white text-xs font-semibold hover:bg-accent-dark active:scale-[0.97] disabled:opacity-50 transition-all"
                   >
                     Aprobar
                   </button>
