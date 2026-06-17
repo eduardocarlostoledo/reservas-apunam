@@ -7,7 +7,7 @@ const NAV_LINKS = [
 ];
 
 const EXTERNAL_LINKS = [
-  { href: 'https://geosapunam.com.ar', label: 'GEOS' },
+  // { href: 'https://geosapunam.com.ar', label: 'GEOS' },
   { href: 'https://apunam.net.ar/', label: 'Web Institucional' },
 ];
 
@@ -104,9 +104,9 @@ export default function Layout() {
             <div>
               <h3 className="text-white font-bold text-lg mb-3">Enlaces</h3>
               <div className="space-y-2 text-sm">
-                <a href="https://geosapunam.com.ar" target="_blank" rel="noopener noreferrer" className="block opacity-80 hover:opacity-100 hover:text-white transition-opacity">
+                {/* <a href="https://geosapunam.com.ar" target="_blank" rel="noopener noreferrer" className="block opacity-80 hover:opacity-100 hover:text-white transition-opacity">
                   Sistema GEOS
-                </a>
+                </a> */}
                 <a href="https://apunam.net.ar/" target="_blank" rel="noopener noreferrer" className="block opacity-80 hover:opacity-100 hover:text-white transition-opacity">
                   Web Institucional
                 </a>

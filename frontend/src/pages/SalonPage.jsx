@@ -3,6 +3,16 @@ import { useParams, Link } from 'react-router-dom';
 import { getDisponibilidad } from '../services/api';
 import Calendar from '../components/Calendar';
 import ReservaForm from '../components/ReservaForm';
+import LoginUsuario from '../components/LoginUsuario';
+
+function getUserData() {
+  try {
+    const token = localStorage.getItem('user_token');
+    const data = localStorage.getItem('user_data');
+    if (token && data) return JSON.parse(data);
+  } catch {}
+  return null;
+}
 
 export default function SalonPage() {
   const { id } = useParams();
@@ -11,6 +21,7 @@ export default function SalonPage() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [usuario, setUsuario] = useState(getUserData);
 
   const now = new Date();
   const [viewMonth, setViewMonth] = useState(now.getMonth() + 1);
@@ -25,6 +36,17 @@ export default function SalonPage() {
   }, [id, viewMonth, viewYear]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
+
+  function handleLogin(userData) {
+    setUsuario(userData);
+  }
+
+  function handleLogout() {
+    localStorage.removeItem('user_token');
+    localStorage.removeItem('user_data');
+    setUsuario(null);
+    setSelectedDate(null);
+  }
 
   function handleSuccess() {
     setSuccess(true);
@@ -69,6 +91,26 @@ export default function SalonPage() {
     );
   }
 
+  if (!usuario) {
+    return (
+      <div>
+        <Link to="/" className="inline-flex items-center gap-1 text-sm text-muted hover:text-text transition-colors mb-6">
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+          Volver a salones
+        </Link>
+
+        {salon && (
+          <div className="mb-8">
+            <h1 className="text-2xl md:text-3xl font-bold text-text">{salon.nombre}</h1>
+            <p className="text-muted mt-1">{salon.ubicacion}, Misiones</p>
+          </div>
+        )}
+
+        <LoginUsuario onLogin={handleLogin} />
+      </div>
+    );
+  }
+
   return (
     <div>
       <Link to="/" className="inline-flex items-center gap-1 text-sm text-muted hover:text-text transition-colors mb-6">
@@ -78,8 +120,23 @@ export default function SalonPage() {
 
       {salon && (
         <div className="mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-text">{salon.nombre}</h1>
-          <p className="text-muted mt-1">{salon.ubicacion}, Misiones</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold text-text">{salon.nombre}</h1>
+              <p className="text-muted mt-1">{salon.ubicacion}, Misiones</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-muted">
+                {usuario.apellido}, {usuario.nombre}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="px-3 py-1.5 rounded-lg border border-border text-xs font-medium text-muted hover:bg-subtle hover:text-text transition-colors"
+              >
+                Salir
+              </button>
+            </div>
+          </div>
           <p className="text-xs text-gray-400 mt-2 flex items-center gap-1.5">
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             06:00 a 00:00 hs — Reserva por día completo
@@ -99,6 +156,7 @@ export default function SalonPage() {
             salonId={parseInt(id)}
             fecha={selectedDate}
             salonNombre={salon?.nombre}
+            usuario={usuario}
             onSuccess={handleSuccess}
             onCancel={() => setSelectedDate(null)}
           />

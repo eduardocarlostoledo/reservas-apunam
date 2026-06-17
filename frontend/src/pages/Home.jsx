@@ -59,10 +59,10 @@ export default function Home() {
             <a href="#salones" className="bg-accent hover:bg-accent-dark text-white px-6 py-3 rounded-xl font-semibold text-sm transition-colors">
               Ver salones disponibles
             </a>
-            <a href="https://geosapunam.com.ar" target="_blank" rel="noopener noreferrer"
+            {/* <a href="https://geosapunam.com.ar" target="_blank" rel="noopener noreferrer"
               className="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-xl font-semibold text-sm backdrop-blur transition-colors">
               Acceder a GEOS
-            </a>
+            </a> */}
           </div>
         </div>
       </section>
@@ -74,10 +74,16 @@ export default function Home() {
         </div>
         <div>
           <h3 className="font-semibold text-text text-sm">Recordatorio para afiliados</h3>
+
           <p className="text-muted text-sm mt-0.5">
+            Las Ayudas Económicas y Proveeduría se solicitan por el sistema GEOS.
+          </p>
+
+
+          {/* <p className="text-muted text-sm mt-0.5">
             Las Ayudas Económicas y Proveeduría se solicitan por el sistema{' '}
             <a href="https://geosapunam.com.ar" target="_blank" rel="noopener noreferrer" className="text-primary font-medium hover:underline">GEOS</a>.
-          </p>
+          </p> */}
         </div>
       </section>
 

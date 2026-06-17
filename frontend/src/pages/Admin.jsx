@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { adminLogin, getAdminReservas, aprobarReserva, rechazarReserva, getSalones } from '../services/api';
 
 const INPUT = 'w-full border border-border rounded-xl px-4 py-3 text-sm text-text bg-surface placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors';
@@ -65,8 +66,11 @@ const ESTADO_BADGE = {
   CANCELADA: 'bg-gray-50 text-gray-500 border-gray-200',
 };
 
-export default function Admin() {
-  const [authed, setAuthed] = useState(!!localStorage.getItem('admin_token'));
+const TAB = 'px-4 py-2 rounded-xl text-sm font-medium transition-colors';
+const TAB_ACTIVE = `${TAB} bg-primary text-white`;
+const TAB_INACTIVE = `${TAB} text-muted hover:bg-subtle hover:text-text`;
+
+function ReservasPanel() {
   const [reservas, setReservas] = useState([]);
   const [salones, setSalones] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -82,22 +86,11 @@ export default function Admin() {
       if (filtroSalon) params.salon_id = filtroSalon;
       const data = await getAdminReservas(params);
       setReservas(data);
-    } catch (err) {
-      if (err.response?.status === 401) {
-        localStorage.removeItem('admin_token');
-        setAuthed(false);
-      }
-    } finally {
-      setLoading(false);
-    }
+    } catch {}
+    setLoading(false);
   }, [filtroEstado, filtroSalon]);
 
-  useEffect(() => {
-    if (authed) {
-      fetchReservas();
-      getSalones().then(setSalones).catch(() => {});
-    }
-  }, [authed, fetchReservas]);
+  useEffect(() => { fetchReservas(); getSalones().then(setSalones).catch(() => {}); }, [fetchReservas]);
 
   async function handleAprobar(id) {
     setActionLoading(id);
@@ -111,28 +104,10 @@ export default function Admin() {
     setActionLoading(null);
   }
 
-  function handleLogout() {
-    localStorage.removeItem('admin_token');
-    setAuthed(false);
-  }
-
-  if (!authed) return <LoginForm onLogin={() => setAuthed(true)} />;
-
   const SELECT = 'border border-border rounded-xl px-4 py-2.5 text-sm bg-surface text-text focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors appearance-none cursor-pointer';
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-2xl font-bold text-text">Reservas</h1>
-          <p className="text-sm text-muted mt-1">{reservas.length} solicitudes</p>
-        </div>
-        <button onClick={handleLogout}
-          className="px-4 py-2 rounded-xl border border-border text-muted text-sm font-medium hover:bg-subtle hover:text-text transition-colors">
-          Cerrar sesión
-        </button>
-      </div>
-
+    <>
       <div className="flex gap-3 mb-6 flex-wrap">
         <select value={filtroEstado} onChange={e => setFiltroEstado(e.target.value)} className={SELECT}>
           <option value="">Todos los estados</option>
@@ -196,6 +171,50 @@ export default function Admin() {
           ))}
         </div>
       )}
+    </>
+  );
+}
+
+export default function Admin() {
+  const [authed, setAuthed] = useState(!!localStorage.getItem('admin_token'));
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isUsuarios = location.pathname.includes('/admin/usuarios');
+
+  function handleLogout() {
+    localStorage.removeItem('admin_token');
+    setAuthed(false);
+  }
+
+  if (!authed) return <LoginForm onLogin={() => setAuthed(true)} />;
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-4">
+          <h1 className="text-2xl font-bold text-text">Panel Admin</h1>
+          <div className="flex gap-1 bg-subtle rounded-xl p-1">
+            <button
+              onClick={() => navigate('/admin')}
+              className={isUsuarios ? TAB_INACTIVE : TAB_ACTIVE}
+            >
+              Reservas
+            </button>
+            <button
+              onClick={() => navigate('/admin/usuarios')}
+              className={isUsuarios ? TAB_ACTIVE : TAB_INACTIVE}
+            >
+              Usuarios
+            </button>
+          </div>
+        </div>
+        <button onClick={handleLogout} className="px-4 py-2 rounded-xl border border-border text-muted text-sm font-medium hover:bg-subtle hover:text-text transition-colors">
+          Cerrar sesión
+        </button>
+      </div>
+
+      {isUsuarios ? <Outlet /> : <ReservasPanel />}
     </div>
   );
 }
