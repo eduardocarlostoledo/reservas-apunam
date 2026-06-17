@@ -9,6 +9,7 @@ const { sequelize } = require('./models');
 const salonRoutes = require('./routes/salonRoutes');
 const reservaRoutes = require('./routes/reservaRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const usuarioRoutes = require('./routes/usuarioRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -32,6 +33,8 @@ app.use('/api/', limiter);
 app.use('/api/salones', salonRoutes);
 app.use('/api/reservas', reservaRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/usuarios', usuarioRoutes);
+app.use('/api/admin/usuarios', usuarioRoutes);
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
 

@@ -29,7 +29,7 @@ async function crearReserva(req, res) {
       return res.status(409).json({ error: 'La fecha seleccionada no está disponible' });
     }
 
-    if (!validarAfiliado(dni, numero_afiliado)) {
+    if (!(await validarAfiliado(dni, numero_afiliado))) {
       return res.status(403).json({ error: 'No figura como afiliado habilitado.' });
     }
 
