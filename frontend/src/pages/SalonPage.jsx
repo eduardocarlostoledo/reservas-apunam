@@ -1,9 +1,17 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getDisponibilidad } from '../services/api';
 import Calendar from '../components/Calendar';
 import ReservaForm from '../components/ReservaForm';
 import LoginUsuario from '../components/LoginUsuario';
+
+function ScrollTo({ children }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
+  return <div ref={ref} className="scroll-mt-20">{children}</div>;
+}
 
 function getUserData() {
   try {
@@ -106,7 +114,9 @@ export default function SalonPage() {
           </div>
         )}
 
-        <LoginUsuario onLogin={handleLogin} />
+        <ScrollTo>
+          <LoginUsuario onLogin={handleLogin} />
+        </ScrollTo>
       </div>
     );
   }

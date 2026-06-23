@@ -9,6 +9,7 @@ const NAV_LINKS = [
 const EXTERNAL_LINKS = [
   // { href: 'https://geosapunam.com.ar', label: 'GEOS' },
   { href: 'https://apunam.net.ar/', label: 'Web Institucional' },
+  { href: 'https://ferozo.email/', label: 'Webmail' },
 ];
 
 export default function Layout() {
@@ -18,8 +19,8 @@ export default function Layout() {
     <div className="min-h-screen bg-subtle flex flex-col">
       {/* Top bar */}
       <div className="bg-primary-dark text-primary-light text-xs py-1.5">
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-          <span>Asociación del Personal Universitario No Docente — Misiones</span>
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 flex items-center justify-between">
+          <span className="truncate">Asociación del Personal Universitario No Docente — Misiones</span>
           <div className="hidden sm:flex items-center gap-4">
             <a href="https://www.instagram.com/apunam_misiones/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a>
             <a href="https://www.facebook.com/apunamNodocentes/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Facebook</a>
@@ -30,14 +31,12 @@ export default function Layout() {
 
       {/* Header */}
       <header className="bg-surface border-b border-border sticky top-0 z-50 shadow-sm">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-white font-bold text-sm">AP</span>
-            </div>
-            <div className="leading-tight">
+            <img src="/logo.png" alt="APUNaM" className="h-8 sm:h-10 w-auto" />
+            <div className="leading-tight hidden sm:block">
               <span className="text-primary text-lg font-bold tracking-tight block">APUNaM</span>
-              <span className="text-muted text-[10px] hidden sm:block">Reserva de Salones</span>
+              <span className="text-muted text-[10px]">Reserva de Salones</span>
             </div>
           </Link>
 
@@ -46,7 +45,7 @@ export default function Layout() {
               <Link
                 key={link.to}
                 to={link.to}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-2 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   pathname === link.to
                     ? 'bg-primary-light text-primary'
                     : 'text-muted hover:bg-subtle hover:text-text'
@@ -55,13 +54,24 @@ export default function Layout() {
                 {link.label}
               </Link>
             ))}
-            {EXTERNAL_LINKS.map(link => (
+            <a
+              href="https://ferozo.email/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-2 sm:px-4 py-2 rounded-lg text-sm font-medium text-muted hover:bg-subtle hover:text-text transition-colors"
+            >
+              Webmail
+              <svg className="w-3 h-3 inline ml-1 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+            {EXTERNAL_LINKS.filter(link => link.href !== 'https://ferozo.email/').map(link => (
               <a
                 key={link.href}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-lg text-sm font-medium text-muted hover:bg-subtle hover:text-text transition-colors hidden md:inline-block"
+                className="px-2 sm:px-4 py-2 rounded-lg text-sm font-medium text-muted hover:bg-subtle hover:text-text transition-colors hidden md:inline-block"
               >
                 {link.label}
                 <svg className="w-3 h-3 inline ml-1 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -73,14 +83,14 @@ export default function Layout() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-6xl w-full mx-auto px-6 py-10">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-3 sm:px-6 py-6 sm:py-10">
         <Outlet />
       </main>
 
       {/* Footer */}
       <footer className="bg-primary text-primary-light">
-        <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="grid md:grid-cols-3 gap-10">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 py-8 sm:py-12">
+          <div className="grid md:grid-cols-4 gap-10">
             {/* Col 1: Info */}
             <div>
               <h3 className="text-white font-bold text-lg mb-3">APUNaM</h3>
@@ -90,23 +100,42 @@ export default function Layout() {
               </p>
             </div>
 
-            {/* Col 2: Contacto */}
+            {/* Col 2: Sedes */}
             <div>
-              <h3 className="text-white font-bold text-lg mb-3">Contacto</h3>
-              <div className="space-y-2 text-sm opacity-80">
-                <p>Cnel. Félix Bogado 1821</p>
-                <p>N3301JBN Posadas, Misiones</p>
-                <p>Tel: 376 4431065</p>
+              <h3 className="text-white font-bold text-lg mb-3">Sedes</h3>
+              <div className="space-y-3 text-sm opacity-80">
+                <div>
+                  <p className="text-white font-medium opacity-100">Sede Central — Posadas</p>
+                  <p>Félix Bogado 1833</p>
+                  <p>Tel: 3764-4431065</p>
+                  <a href="mailto:recepcion.posadas@apunam.net.ar" className="hover:text-white transition-colors">recepcion.posadas@apunam.net.ar</a>
+                </div>
+                <div>
+                  <p className="text-white font-medium opacity-100">Delegación Oberá</p>
+                  <p>Oberá, Misiones</p>
+                </div>
+                <div>
+                  <p className="text-white font-medium opacity-100">Delegación Eldorado</p>
+                  <p>Eldorado, Misiones</p>
+                </div>
               </div>
             </div>
 
-            {/* Col 3: Links */}
+            {/* Col 3: Contacto */}
+            <div>
+              <h3 className="text-white font-bold text-lg mb-3">Contacto</h3>
+              <div className="space-y-2 text-sm opacity-80">
+                <p>Cnel. Félix Bogado 1833</p>
+                <p>N3301JBN Posadas, Misiones</p>
+                <p>Tel: 3764-4431065</p>
+                <a href="mailto:recepcion.posadas@apunam.net.ar" className="hover:text-white transition-colors">recepcion.posadas@apunam.net.ar</a>
+              </div>
+            </div>
+
+            {/* Col 4: Links */}
             <div>
               <h3 className="text-white font-bold text-lg mb-3">Enlaces</h3>
               <div className="space-y-2 text-sm">
-                {/* <a href="https://geosapunam.com.ar" target="_blank" rel="noopener noreferrer" className="block opacity-80 hover:opacity-100 hover:text-white transition-opacity">
-                  Sistema GEOS
-                </a> */}
                 <a href="https://apunam.net.ar/" target="_blank" rel="noopener noreferrer" className="block opacity-80 hover:opacity-100 hover:text-white transition-opacity">
                   Web Institucional
                 </a>
