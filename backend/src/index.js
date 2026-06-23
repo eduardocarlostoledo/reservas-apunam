@@ -15,8 +15,12 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(helmet());
+const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5173')
+  .split(',')
+  .map(s => s.trim());
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: allowedOrigins,
   credentials: true,
 }));
 app.use(morgan('combined'));
