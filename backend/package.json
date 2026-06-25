@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "seed": "node src/utils/seed.js"
+    "seed": "node src/utils/seed.js",
+    "cleanup": "node src/utils/cleanupSalones.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

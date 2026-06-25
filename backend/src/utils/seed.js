@@ -7,12 +7,15 @@ async function seed() {
     await sequelize.authenticate();
     await sequelize.sync({ force: true });
 
+    // Remove any old/incorrect salones (e.g., Montecarlo)
+    await Salon.destroy({ where: {} });
+
     await Salon.bulkCreate([
       { nombre: 'Salón Posadas', ubicacion: 'Posadas' },
       { nombre: 'Salón Oberá', ubicacion: 'Oberá' },
       { nombre: 'Salón Eldorado', ubicacion: 'Eldorado' },
     ]);
-    console.log('Salones created');
+    console.log('Salones created (Posadas, Oberá, Eldorado)');
 
     const password = process.env.ADMIN_PASSWORD || 'admin123';
     const hash = await bcrypt.hash(password, 10);
