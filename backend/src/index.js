@@ -15,9 +15,14 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(helmet());
-const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5173')
-  .split(',')
-  .map(s => s.trim());
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://apunam.net.ar',
+  'https://reservas.apunam.net.ar',
+  'https://reservas-apunam.netlify.app',
+  ...(process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',').map(s => s.trim()) : []),
+];
 
 app.use(cors({
   origin: allowedOrigins,
