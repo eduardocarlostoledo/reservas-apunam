@@ -6,6 +6,7 @@ async function cleanup() {
     await sequelize.authenticate();
     console.log('DB connected');
 
+<<<<<<< HEAD
     // Remove Montecarlo if exists (case-insensitive)
     const removed = await Salon.destroy({
       where: sequelize.where(
@@ -22,6 +23,15 @@ async function cleanup() {
     }
 
     // Ensure correct salones exist
+=======
+    // Eliminar Montecarlo si existe
+    await Salon.destroy({
+      where: { nombre: { [sequelize.Sequelize.Op.iLike]: '%montecarlo%' } }
+    });
+    console.log('Montecarlo removed (if existed)');
+
+    // Asegurar que existan los 3 salones correctos
+>>>>>>> bf41035aa596741ef2b6996df9fbf01e827074e3
     const salonesEsperados = [
       { nombre: 'Salón Posadas', ubicacion: 'Posadas' },
       { nombre: 'Salón Oberá', ubicacion: 'Oberá' },
@@ -36,9 +46,15 @@ async function cleanup() {
       }
     }
 
+<<<<<<< HEAD
     // Show final state
     const final = await Salon.findAll({ where: { activo: true } });
     console.log(`\nFinal salones (${final.length}):`);
+=======
+    // Verificar estado final
+    const final = await Salon.findAll({ where: { activo: true } });
+    console.log('Final state:');
+>>>>>>> bf41035aa596741ef2b6996df9fbf01e827074e3
     final.forEach(s => console.log(`  - ${s.nombre} (${s.ubicacion})`));
 
     process.exit(0);

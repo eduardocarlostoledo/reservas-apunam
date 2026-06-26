@@ -8,12 +8,24 @@ async function seed() {
     // NO force: true - respects existing data (production-safe)
     await sequelize.sync();
 
+<<<<<<< HEAD
     // Only create salones if they don't exist
     const salonesEsperados = [
       { nombre: 'Salón Posadas', ubicacion: 'Posadas' },
       { nombre: 'Salón Oberá', ubicacion: 'Oberá' },
       { nombre: 'Salón Eldorado', ubicacion: 'Eldorado' },
     ];
+=======
+    // Remove any old/incorrect salones (e.g., Montecarlo)
+    await Salon.destroy({ where: {} });
+
+    await Salon.bulkCreate([
+      { nombre: 'Salón Posadas', ubicacion: 'Posadas' },
+      { nombre: 'Salón Oberá', ubicacion: 'Oberá' },
+      { nombre: 'Salón Eldorado', ubicacion: 'Eldorado' },
+    ]);
+    console.log('Salones created (Posadas, Oberá, Eldorado)');
+>>>>>>> bf41035aa596741ef2b6996df9fbf01e827074e3
 
     for (const salon of salonesEsperados) {
       const exists = await Salon.findOne({ where: { nombre: salon.nombre } });
